@@ -5,6 +5,5 @@ export const useSearchFilter = create((set) => ({
   addSearchFilter: (label, value) =>
     set((state) => ({
       currentFilters: { ...state.currentFilters, [label]: value }
-    })),
-  removeAllBears: () => set({ bears: 0 })
+    }))
 }))
