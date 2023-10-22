@@ -1,8 +1,14 @@
-const ItemTemplate = ({ item, showCategory }) => {
-  const { title, category, date } = item
+const ItemTemplate = ({ item }) => {
+  const { groupLabel, groupValue, items } = item
   return <div>
-    <p>{title}</p>
-    {showCategory && <small>{category}</small>}
+    <p>{groupValue}</p>
+    {
+      items.map(item => (
+        <p key={item.title}>
+          {item.title}
+        </p>
+      ))
+    }
     </div>
 }
 export default ItemTemplate

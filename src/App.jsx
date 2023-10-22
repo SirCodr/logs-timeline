@@ -2,9 +2,10 @@ import { Timeline } from 'primereact/timeline'
 import { events } from './consts/data'
 import { useEffect, useState } from 'react'
 import ItemTemplate from './compontents/Timeline/ItemTemplate'
+import { groupAndFilterData, groupDataBy } from './utils/collect';
 
 function App() {
-  const [data, setData] = useState(events)
+  const [data, setData] = useState([])
   const [titleFilter, setTitleFilter] = useState(null)
 
   const handleSubmit = (e) => {
@@ -13,10 +14,12 @@ function App() {
 
   useEffect(() => {
     if (titleFilter) {
-      const dataFiltered = data.filter(item => item.status.toLocaleLowerCase().includes(titleFilter))
+      const dataFiltered = groupAndFilterData({
+        data: events, groupBy: 'date', filterBy: 'title', filterValue: titleFilter
+      })
       setData(dataFiltered)
     } else {
-      setData(events)
+      setData(groupDataBy(events,'date'))
     }
   }, [titleFilter])
 
@@ -27,7 +30,7 @@ function App() {
         <Timeline
           value={data}
           align='alternate'
-          content={item => <ItemTemplate item={item} showCategory={true} />}
+          content={item => <ItemTemplate item={item} />}
           pt={{
             marker: { className: 'border-2 border-red-500' }
           }}
