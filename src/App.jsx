@@ -2,35 +2,36 @@ import { Timeline } from 'primereact/timeline'
 import { events } from './consts/data'
 import { useEffect, useState } from 'react'
 import ItemTemplate from './compontents/Timeline/ItemTemplate'
-import { groupAndFilterData, groupDataBy } from './utils/collect';
+import { groupAndFilterData, groupDataBy } from './utils/collect'
+import Header from './compontents/Header'
+import { useSearchFilter } from './store/searchFilter'
 
 function App() {
+  const  currentFilters = useSearchFilter(state => state.currentFilters)
   const [data, setData] = useState([])
-  const [titleFilter, setTitleFilter] = useState(null)
-
-  const handleSubmit = (e) => {
-    setTitleFilter(e.target.value)
-  }
 
   useEffect(() => {
-    if (titleFilter) {
+    if (currentFilters && currentFilters.title) {
       const dataFiltered = groupAndFilterData({
-        data: events, groupBy: 'date', filterBy: 'title', filterValue: titleFilter
+        data: events,
+        groupBy: 'date',
+        filterBy: 'title',
+        filterValue: currentFilters.title
       })
       setData(dataFiltered)
     } else {
-      setData(groupDataBy(events,'date'))
+      setData(groupDataBy(events, 'date'))
     }
-  }, [titleFilter])
+  }, [currentFilters])
 
   return (
     <main className='h-screen'>
       <div className=' flex flex-col gap-y-3 p-4'>
-        <input placeholder='Search' type='search' onChange={handleSubmit} />
+        <Header />
         <Timeline
           value={data}
           align='alternate'
-          content={item => <ItemTemplate item={item} />}
+          content={(item) => <ItemTemplate item={item} />}
           pt={{
             marker: { className: 'border-2 border-red-500' }
           }}
