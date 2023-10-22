@@ -6,6 +6,7 @@ import Header from './compontents/Header'
 import { useSearchFilter } from './store/searchFilter'
 import { useLogStore } from './store/logs'
 import { events } from './consts/data'
+import EmptyResult from './compontents/EmptyResult'
 
 function App() {
   const  currentFilters = useSearchFilter(state => state.currentFilters)
@@ -13,7 +14,7 @@ function App() {
   const [data, setData] = useState([])
 
   useEffect(() => {
-    setLogs(events)
+    setLogs([events])
   }, [])
 
   useEffect(() => {
@@ -31,10 +32,12 @@ function App() {
   }, [logs, currentFilters])
 
   return (
-    <main className='h-screen'>
+    <main className='h-screen bg-gray-400'>
       <div className=' flex flex-col gap-y-3 p-4'>
         <Header />
-        <Timeline
+        {
+          data && data.length ? (
+            <Timeline
           value={data}
           align='alternate'
           content={(item) => <ItemTemplate item={item} />}
@@ -42,6 +45,8 @@ function App() {
             marker: { className: 'border-2 border-red-500' }
           }}
         />
+          ) : <EmptyResult />
+        }
       </div>
     </main>
   )
