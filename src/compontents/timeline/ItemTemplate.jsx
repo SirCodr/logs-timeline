@@ -3,8 +3,8 @@ const ItemTemplate = ({ item }) => {
   return <div>
     <p>{groupValue}</p>
     {
-      items.map(item => (
-        <p key={item.title}>
+      items.map((item, index) => (
+        <p key={index}>
           {item.title}
         </p>
       ))
