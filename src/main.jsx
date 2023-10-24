@@ -4,9 +4,21 @@ import App from './App.jsx'
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import 'primeicons/primeicons.css';
 import './index.css'
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false
+    }
+  }
+})
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <QueryClientProvider client={queryClient}>
+      <App />
+    </QueryClientProvider>
   </React.StrictMode>,
 )
