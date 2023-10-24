@@ -14,7 +14,7 @@ function App() {
   const [data, setData] = useState([])
 
   useEffect(() => {
-    setLogs([events])
+    setLogs(events)
   }, [])
 
   useEffect(() => {
@@ -32,7 +32,7 @@ function App() {
   }, [logs, currentFilters])
 
   return (
-    <main className='h-screen bg-gray-400'>
+    <main className='h-screen'>
       <div className=' flex flex-col gap-y-3 p-4'>
         <Header />
         {
