@@ -1,6 +1,6 @@
 import { Timeline } from 'primereact/timeline'
 import { useEffect, useState } from 'react'
-import ItemTemplate from './compontents/Timeline/ItemTemplate'
+import ItemTemplate from './compontents/timeline/ItemTemplate'
 import { groupAndFilterData, groupDataBy } from './utils/collect'
 import Header from './compontents/Header'
 import { useSearchFilter } from './store/searchFilter'
