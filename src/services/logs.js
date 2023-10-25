@@ -12,7 +12,7 @@ export const fetchAllLogs = async () => {
 
 export const insertLog = async (log) => {
   try {
-    const { data, error } = await supabase.from('logs').insert({log})
+    const { data, error } = await supabase.from('logs').insert(log)
 
     return error ?? data
   } catch (error) {

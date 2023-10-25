@@ -1,17 +1,24 @@
 import { useRef, useState } from 'react'
 import { useLogStore } from '../store/logs'
+import { useMutation } from 'react-query'
+import { insertLog } from '../services/logs'
+import { Button } from 'primereact/button'
 
 const CreateLogForm = ({ onCreated = () => {} }) => {
   const addLogs = useLogStore((state) => state.addLogs)
   const [log, setLog] = useState({})
   const formRef = useRef(null)
 
-  const createNewLog = () => {
-    addLogs(log)
-    setLog({})
-    formRef.current.reset()
-    onCreated()
-  }
+  const insertLoginMutation = useMutation(insertLog, {
+    onSuccess: (data, variables, context) => {
+      addLogs(variables)
+      setLog({})
+      formRef.current.reset()
+      onCreated()
+    }
+  })
+
+  const createNewLog = () => insertLoginMutation.mutate(log)
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -38,9 +45,7 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
         <label htmlFor='date'>Fecha</label>
         <input type='text' id='date' name='date' onChange={handleChange} />
       </div>
-      <button type='button' onClick={createNewLog}>
-        Crear
-      </button>
+      <Button label='Crear' onClick={createNewLog} loading={insertLoginMutation.isLoading}/>
     </form>
   )
 }
