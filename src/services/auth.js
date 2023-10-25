@@ -1,6 +1,6 @@
 import { supabase } from '../supabaseClient'
 
-export const loginWithGmail = async () =>
+export const signInWithGoogle = async () =>
   await supabase.auth.signInWithOAuth({
     provider: 'google'
   })

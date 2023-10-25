@@ -1,21 +1,22 @@
 import { supabase } from '../supabaseClient'
+import handleRequest from './requestHandler'
 
 export const fetchAllLogs = async () => {
-  try {
-    const { data, error } = await supabase.from('logs').select('*').order('date', { ascending: false })
+  return handleRequest(async ({ userSession }) => {
+    const { data, error } = await supabase
+      .from('logs')
+      .select('*')
+      .eq('user_id', userSession.user.id)
+      .order('date', { ascending: false })
 
     return error ?? data
-  } catch (error) {
-    console.error('Error on fetch all logs: ', error)
-  } 
+  })
 }
 
 export const insertLog = async (log) => {
-  try {
+  return handleRequest(async () => {
     const { data, error } = await supabase.from('logs').insert(log)
 
     return error ?? data
-  } catch (error) {
-    console.error('Error on insert log: ', error)
-  }
+  })
 }

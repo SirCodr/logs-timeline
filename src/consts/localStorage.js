@@ -1,0 +1,3 @@
+export const LOCAL_STORAGE_MAP = {
+  USER_SESSION: 'LTL__USER_SESSION'
+}
