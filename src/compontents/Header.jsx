@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { useSearchFilter } from '../store/searchFilter'
 import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog'
-import CreateLogForm from './createLogForm'
+import CreateLogForm from './CreateLogForm'
 
 const Header = () => {
   const addSearchFilter = useSearchFilter((state) => state.addSearchFilter)
