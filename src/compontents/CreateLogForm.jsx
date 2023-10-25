@@ -3,6 +3,8 @@ import { useLogStore } from '../store/logs'
 import { useMutation } from 'react-query'
 import { insertLog } from '../services/logs'
 import { Button } from 'primereact/button'
+import { Calendar } from 'primereact/calendar'
+import { DateTime } from 'luxon'
 
 const CreateLogForm = ({ onCreated = () => {} }) => {
   const addLogs = useLogStore((state) => state.addLogs)
@@ -10,7 +12,7 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
   const formRef = useRef(null)
 
   const insertLoginMutation = useMutation(insertLog, {
-    onSuccess: (data, variables, context) => {
+    onSuccess: (data, variables) => {
       addLogs(variables)
       setLog({})
       formRef.current.reset()
@@ -18,7 +20,12 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
     }
   })
 
-  const createNewLog = () => insertLoginMutation.mutate(log)
+  const handleLogCreation = () => {
+    insertLoginMutation.mutate({
+      ...log,
+      date: DateTime.fromJSDate(log.date).toFormat('yyyy-LL-dd')
+    })
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -43,9 +50,9 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
       </div>
       <div className='flex flex-col gap-y-2'>
         <label htmlFor='date'>Fecha</label>
-        <input type='text' id='date' name='date' onChange={handleChange} />
+        <Calendar id='date' name='date' onChange={handleChange} showIcon />
       </div>
-      <Button label='Crear' onClick={createNewLog} loading={insertLoginMutation.isLoading}/>
+      <Button type='button' label='Crear' onClick={handleLogCreation} loading={insertLoginMutation.isLoading}/>
     </form>
   )
 }
