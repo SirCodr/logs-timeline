@@ -2,7 +2,9 @@ import { useRef, useState } from 'react'
 import { useSearchFilter } from '../store/searchFilter'
 import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog'
+import { Avatar } from 'primereact/avatar'
 import CreateLogForm from './CreateLogForm'
+import { logout } from '../services/auth'
 
 const Header = () => {
   const addSearchFilter = useSearchFilter((state) => state.addSearchFilter)
@@ -12,6 +14,11 @@ const Header = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     addSearchFilter('title', titleInputRef.current.value)
+  }
+
+  const handleLogout = async () => {
+    await logout()
+    location.reload()
   }
 
   return (
@@ -28,7 +35,12 @@ const Header = () => {
         />
         <Button label='Buscar' />
       </form>
-      <Button label='Nuevo' onClick={() => setModalOpen(true)} />
+      <section className='flex items-center gap-x-3'>
+        <Button label='Nuevo' onClick={() => setModalOpen(true)} />
+        <button onClick={handleLogout}>
+          <Avatar icon="pi pi-user" size="normal" shape="circle" />
+        </button>
+      </section>
 
       <Dialog
         header='Nuevo registro'
