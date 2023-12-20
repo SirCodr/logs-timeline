@@ -5,9 +5,14 @@ const handleRequest = async (callback = async () => {}) => {
   try {
     const userSession = getLocalStorageItem(LOCAL_STORAGE_MAP.USER_SESSION, { isObject: true })
 
-    return await callback({ userSession })
+    const response = await callback({ userSession })
+    
+    if (response.error) throw new Error(response.error.message)
+
+    return response.data
   } catch (error) {
     console.error('Something failed on request: ', error)
+    throw new Error(error)
   }
 }
 
