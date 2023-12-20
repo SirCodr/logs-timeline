@@ -15,11 +15,9 @@ export const fetchAllLogs = async () => {
 
 export const insertLog = async (log) => {
   return handleRequest(async ({ userSession }) => {
-    const { data, error } = await supabase.from('logs').insert({
+    return await supabase.from('logs').insert({
       ...log,
       user_id: userSession.user.id
     })
-
-    return error ?? data
   })
 }

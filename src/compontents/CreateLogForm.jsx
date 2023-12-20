@@ -5,6 +5,7 @@ import { insertLog } from '../services/logs'
 import { Button } from 'primereact/button'
 import { Calendar } from 'primereact/calendar'
 import { DateTime } from 'luxon'
+import { renderErrorToast } from '../utils/toast'
 
 const CreateLogForm = ({ onCreated = () => {} }) => {
   const addLogs = useLogStore((state) => state.addLogs)
@@ -13,6 +14,8 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
 
   const insertLoginMutation = useMutation(insertLog, {
     onSuccess: (data, variables) => {
+      if (data.error) return renderErrorToast(data.error.message)
+
       addLogs(variables)
       setLog({})
       formRef.current.reset()

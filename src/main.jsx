@@ -5,6 +5,7 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import 'primeicons/primeicons.css';
 import './index.css'
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { Toaster } from 'sonner';
 
 
 const queryClient = new QueryClient({
@@ -19,6 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <App />
+      <Toaster richColors />
     </QueryClientProvider>
   </React.StrictMode>,
 )
