@@ -1,46 +1,22 @@
-import { useRef, useState } from 'react'
-import { useLogStore } from '../store/logs'
-import { useMutation } from 'react-query'
-import { insertLog } from '../services/logs'
 import { Button } from 'primereact/button'
 import { Calendar } from 'primereact/calendar'
-import { DateTime } from 'luxon'
-import { renderErrorToast } from '../utils/toast'
+import { InputText } from 'primereact/inputtext'
+import useLog from '../hooks/useLog'
 
 const CreateLogForm = ({ onCreated = () => {} }) => {
-  const addLogs = useLogStore((state) => state.addLogs)
-  const [log, setLog] = useState({})
-  const formRef = useRef(null)
-
-  const insertLoginMutation = useMutation(insertLog, {
-    onSuccess: (data, variables) => {
-      if (data.error) return renderErrorToast(data.error.message)
-
-      addLogs(variables)
-      setLog({})
-      formRef.current.reset()
-      onCreated()
-    }
-  })
-
-  const handleLogCreation = () => {
-    insertLoginMutation.mutate({
-      ...log,
-      date: DateTime.fromJSDate(log.date).toFormat('yyyy-LL-dd')
-    })
-  }
-
-  const handleChange = (e) => {
-    const { name, value } = e.target
-
-    setLog((prevLog) => ({ ...prevLog, [name]: value }))
-  }
+  const { handleLogCreation, handleChange, isLogCreating, formRef } =
+    useLog()
 
   return (
     <form className='flex flex-col gap-y-3' ref={formRef}>
       <div className='flex flex-col gap-y-2'>
         <label htmlFor='title'>Título</label>
-        <input type='text' id='title' name='title' onChange={handleChange} />
+        <InputText
+          id='title'
+          name='title'
+          onChange={handleChange}
+          className='border border-black'
+        />
       </div>
       <div className='flex flex-col gap-y-2'>
         <label htmlFor='category'>Categoría</label>
@@ -49,13 +25,26 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
           id='category'
           name='category'
           onChange={handleChange}
+          className='border border-black'
         />
       </div>
       <div className='flex flex-col gap-y-2'>
         <label htmlFor='date'>Fecha</label>
-        <Calendar id='date' name='date' onChange={handleChange} showIcon />
+        <Calendar
+          id='date'
+          name='date'
+          required
+          onChange={handleChange}
+          className='border border-black'
+          showIcon
+        />
       </div>
-      <Button type='button' label='Crear' onClick={handleLogCreation} loading={insertLoginMutation.isLoading}/>
+      <Button
+        type='button'
+        label='Crear'
+        onClick={() => handleLogCreation(onCreated)}
+        loading={isLogCreating}
+      />
     </form>
   )
 }
