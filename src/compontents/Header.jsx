@@ -37,8 +37,8 @@ const Header = () => {
       </form>
       <section className='flex items-center gap-x-3'>
         <Button label='Nuevo' onClick={() => setModalOpen(true)} />
-        <button onClick={handleLogout}>
-          <Avatar icon="pi pi-user" size="normal" shape="circle" />
+        <button onClick={handleLogout} title='Cerrar sesión'>
+          <Avatar icon="pi pi-power-off" size="normal" shape="circle" />
         </button>
       </section>
 
