@@ -1,6 +1,5 @@
 import { Button } from 'primereact/button'
 import { Calendar } from 'primereact/calendar'
-import { InputText } from 'primereact/inputtext'
 import useLog from '../hooks/useLog'
 
 const CreateLogForm = ({ onCreated = () => {} }) => {
@@ -11,12 +10,7 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
     <form className='flex flex-col gap-y-3' ref={formRef}>
       <div className='flex flex-col gap-y-2'>
         <label htmlFor='title'>Título</label>
-        <InputText
-          id='title'
-          name='title'
-          onChange={handleChange}
-          className='border border-black'
-        />
+        <input id='title' name='title' onChange={handleChange} />
       </div>
       <div className='flex flex-col gap-y-2'>
         <label htmlFor='category'>Categoría</label>
@@ -25,7 +19,6 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
           id='category'
           name='category'
           onChange={handleChange}
-          className='border border-black'
         />
       </div>
       <div className='flex flex-col gap-y-2'>
@@ -35,7 +28,6 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
           name='date'
           required
           onChange={handleChange}
-          className='border border-black'
           showIcon
         />
       </div>
@@ -44,6 +36,7 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
         label='Crear'
         onClick={() => handleLogCreation(onCreated)}
         loading={isLogCreating}
+        className='text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2'
       />
     </form>
   )
