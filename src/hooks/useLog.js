@@ -4,6 +4,8 @@ import { useMutation } from "react-query"
 import { insertLog } from "../services/logs"
 import { renderErrorToast } from "../utils/toast"
 import { DateTime } from "luxon"
+import { arePropsValid } from "../utils/schema"
+import { CREATE_LOG_SCHEMA } from "../schemas/logs"
 
 const useLog = () => {
   const addLogs = useLogStore((state) => state.addLogs)
@@ -13,6 +15,8 @@ const useLog = () => {
   const createLog = useMutation(insertLog)
 
   const handleLogCreation = (onCreated = () => {}) => {
+    if (!validateCreationLog()) return renderErrorToast('Invalid log data')
+
      createLog.mutate({
       ...log,
       date: DateTime.fromJSDate(log.date).toFormat('yyyy-LL-dd')
@@ -27,6 +31,8 @@ const useLog = () => {
       }
     })
   }
+
+  const validateCreationLog = () => arePropsValid(log, CREATE_LOG_SCHEMA)
 
   const handleChange = (e) => {
     const { name, value } = e.target
