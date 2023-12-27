@@ -8,3 +8,7 @@ export function renderToast (message, config = {}) {
 export function renderErrorToast (message, config = {}) {
   return toast.error(message, { ...DEFAULT_TOAST_CONFIG, ...config })
 }
+
+export function renderSuccessToast (message, config = {}) {
+  return toast.success(message, { ...DEFAULT_TOAST_CONFIG, ...config })
+}

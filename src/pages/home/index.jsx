@@ -6,27 +6,18 @@ import Header from '../../compontents/Header'
 import { useSearchFilter } from '../../store/searchFilter'
 import { useLogStore } from '../../store/logs'
 import EmptyResult from '../../compontents/EmptyResult'
-import { useQuery } from 'react-query'
-import { fetchAllLogs } from '../../services/logs'
 import { ProgressSpinner } from 'primereact/progressspinner';
+import useLog from '../../hooks/useLog'
 
 function HomePage() {
+  const { getAllUserLogs, areAllLogsQuering }  = useLog()
   const  currentFilters = useSearchFilter(state => state.currentFilters)
-  const [logs, setLogs] = useLogStore(state => [state.logs, state.setLogs])
+  const [logs] = useLogStore(state => [state.logs])
   const [data, setData] = useState([])
 
-  const {
-    isLoading: isLogsLoading,
-    error: logsError,
-    data: logsFetched
-  } = useQuery({
-    queryKey: ['logs'],
-    queryFn: fetchAllLogs
-  })
-
   useEffect(() => {
-    setLogs(logsFetched)
-  }, [logsFetched])
+    getAllUserLogs()
+  }, [])
 
   useEffect(() => {
     if (currentFilters && currentFilters.title) {
@@ -42,7 +33,7 @@ function HomePage() {
     }
   }, [logs, currentFilters])
 
-  if (isLogsLoading) return <ProgressSpinner className='w-12 h-12' />
+  if (areAllLogsQuering) return <ProgressSpinner className='w-12 h-12' />
 
   return (
     <main className='h-screen'>

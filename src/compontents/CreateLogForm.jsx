@@ -1,10 +1,40 @@
 import { Button } from 'primereact/button'
+import { AutoComplete } from 'primereact/autocomplete'
 import { Calendar } from 'primereact/calendar'
 import useLog from '../hooks/useLog'
+import { useEffect, useState } from 'react'
+import PanelFooter from './inputs/autocomplete/PanelFooter'
+import useLogCategory from '../hooks/useLogCategory'
+import { useLogStore } from '../store/logs'
 
 const CreateLogForm = ({ onCreated = () => {} }) => {
   const { handleLogCreation, handleChange, isLogCreating, formRef } =
     useLog()
+  const logCategories = useLogStore((state) => state.logCategories)
+  const { getAllUserLogCategories } = useLogCategory()
+
+  const [filteredCountries, setFilteredCountries] = useState([])
+  const [selectedCountry, setSelectedCountry] = useState(null)
+
+  const search = (event) => {
+    let _filteredCountries
+
+    if (!event.query.trim().length) {
+      _filteredCountries = [...logCategories]
+    } else {
+      _filteredCountries = logCategories.filter((country) => {
+        return country.name.toLowerCase().startsWith(event.query.toLowerCase())
+      })
+    }
+
+    setFilteredCountries(_filteredCountries)
+  }
+
+  useEffect(() => {
+    if (!logCategories || !logCategories.length) {
+      getAllUserLogCategories()
+    }
+  }, [])
 
   return (
     <form className='flex flex-col gap-y-3' ref={formRef}>
@@ -14,11 +44,22 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
       </div>
       <div className='flex flex-col gap-y-2'>
         <label htmlFor='category'>Categoría</label>
-        <input
-          type='text'
-          id='category'
-          name='category'
-          onChange={handleChange}
+        <AutoComplete
+          value={selectedCountry}
+          suggestions={filteredCountries}
+          completeMethod={search}
+          onChange={(e) => setSelectedCountry(e.value)}
+          panelFooterTemplate={
+            <PanelFooter
+              items={filteredCountries}
+              selectedItem={selectedCountry}
+              onCreated={(newValue) => setSelectedCountry(newValue)}
+            />
+          }
+          showEmptyMessage
+          emptyMessage='Sin resultados'
+          field='name'
+          dropdown
         />
       </div>
       <div className='flex flex-col gap-y-2'>
