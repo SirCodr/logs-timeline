@@ -13,21 +13,21 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
   const logCategories = useLogStore((state) => state.logCategories)
   const { getAllUserLogCategories } = useLogCategory()
 
-  const [filteredCountries, setFilteredCountries] = useState([])
-  const [selectedCountry, setSelectedCountry] = useState(null)
+  const [filteredLogCategories, setFilteredLogCategories] = useState([])
+  const [selectedLogCategory, setSelectedLogCategory] = useState(null)
 
   const search = (event) => {
-    let _filteredCountries
+    let filteredItems
 
     if (!event.query.trim().length) {
-      _filteredCountries = [...logCategories]
+      filteredItems = [...logCategories]
     } else {
-      _filteredCountries = logCategories.filter((country) => {
+      filteredItems = logCategories.filter((country) => {
         return country.name.toLowerCase().startsWith(event.query.toLowerCase())
       })
     }
 
-    setFilteredCountries(_filteredCountries)
+    setFilteredLogCategories(filteredItems)
   }
 
   useEffect(() => {
@@ -45,15 +45,15 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
       <div className='flex flex-col gap-y-2'>
         <label htmlFor='category'>Categoría</label>
         <AutoComplete
-          value={selectedCountry}
-          suggestions={filteredCountries}
+          value={selectedLogCategory}
+          suggestions={filteredLogCategories}
           completeMethod={search}
-          onChange={(e) => setSelectedCountry(e.value)}
+          onChange={(e) => setSelectedLogCategory(e.value)}
           panelFooterTemplate={
             <PanelFooter
-              items={filteredCountries}
-              selectedItem={selectedCountry}
-              onCreated={(newValue) => setSelectedCountry(newValue)}
+              items={filteredLogCategories}
+              selectedItem={selectedLogCategory}
+              onCreated={(newValue) => setSelectedLogCategory(newValue)}
             />
           }
           showEmptyMessage
