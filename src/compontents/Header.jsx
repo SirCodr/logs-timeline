@@ -22,19 +22,7 @@ const Header = () => {
   }
 
   return (
-    <header className='flex justify-between'>
-      <form
-        className='flex gap-x-2 px-2 py-3 border border-gray-400 rounded-md w-max'
-        onSubmit={handleSubmit}
-      >
-        <input
-          placeholder='Buscar por título'
-          type='search'
-          className='h-auto outline-none border-none'
-          ref={titleInputRef}
-        />
-        <Button label='Buscar' />
-      </form>
+    <header className='flex justify-end'>
       <section className='flex items-center gap-x-3'>
         <Button label='Nuevo' onClick={() => setModalOpen(true)}/>
         <button onClick={handleLogout} title='Cerrar sesión'>
