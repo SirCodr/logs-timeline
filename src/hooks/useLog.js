@@ -29,7 +29,7 @@ const useLog = () => {
 
      createLog.mutate({
       ...log,
-      date: DateTime.fromJSDate(log.date).toFormat('yyyy-LL-dd')
+      category: log.category.id
     }, {
       onSuccess: () => {
         addLogs(log)
@@ -51,6 +51,10 @@ const useLog = () => {
     setLog((prevLog) => ({ ...prevLog, [name]: value }))
   }
 
+  function handleDateChange (date) {
+    setLog((prevLog) => ({ ...prevLog, date: DateTime.fromJSDate(date).toString() }))
+  }
+
   const isLogCreating = useMemo(() => createLog.isLoading, [createLog.isLoading])
 
   const areAllLogsQuering = useMemo(() => AllUserLogsQuery.isLoading, [AllUserLogsQuery.isLoading])
@@ -60,6 +64,7 @@ const useLog = () => {
       handleLogCreation,
       getAllUserLogs,
       handleChange,
+      handleDateChange,
       isLogCreating,
       areAllLogsQuering,
       formRef,

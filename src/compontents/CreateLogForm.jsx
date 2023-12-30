@@ -8,7 +8,7 @@ import { useLogStore } from '../store/logs'
 import Button from './common/buttons'
 
 const CreateLogForm = ({ onCreated = () => {} }) => {
-  const { handleLogCreation, handleChange, isLogCreating, formRef, log } =
+  const { handleLogCreation, handleChange, handleDateChange, isLogCreating, formRef, log } =
     useLog()
   const logCategories = useLogStore((state) => state.logCategories)
   const { getAllUserLogCategories } = useLogCategory()
@@ -70,11 +70,12 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
           id='date'
           name='date'
           required
-          onChange={(e) => handleChange(e.target)}
+          onChange={e => handleDateChange(e.target.value)}
           showIcon
         />
       </div>
       <Button 
+        type='button'
         label='Crear'
         onClick={() => handleLogCreation(onCreated)}
         loading={isLogCreating}
