@@ -1,10 +1,10 @@
 import { useRef, useState } from 'react'
 import { useSearchFilter } from '../store/searchFilter'
-import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog'
 import { Avatar } from 'primereact/avatar'
 import CreateLogForm from './CreateLogForm'
 import { logout } from '../services/auth'
+import Button from './common/buttons'
 
 const Header = () => {
   const addSearchFilter = useSearchFilter((state) => state.addSearchFilter)
@@ -36,7 +36,7 @@ const Header = () => {
         <Button label='Buscar' />
       </form>
       <section className='flex items-center gap-x-3'>
-        <Button label='Nuevo' onClick={() => setModalOpen(true)} />
+        <Button label='Nuevo' onClick={() => setModalOpen(true)}/>
         <button onClick={handleLogout} title='Cerrar sesión'>
           <Avatar icon="pi pi-power-off" size="normal" shape="circle" />
         </button>

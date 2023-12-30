@@ -45,8 +45,8 @@ const useLog = () => {
 
   const validateCreationLog = () => arePropsValid(log, CREATE_LOG_SCHEMA)
 
-  const handleChange = (e) => {
-    const { name, value } = e.target
+  const handleChange = (event) => {
+    const { name, value } = event
 
     setLog((prevLog) => ({ ...prevLog, [name]: value }))
   }
@@ -62,7 +62,8 @@ const useLog = () => {
       handleChange,
       isLogCreating,
       areAllLogsQuering,
-      formRef
+      formRef,
+      log
     }
   )
 }

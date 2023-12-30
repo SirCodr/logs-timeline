@@ -1,4 +1,3 @@
-import { Button } from 'primereact/button'
 import { AutoComplete } from 'primereact/autocomplete'
 import { Calendar } from 'primereact/calendar'
 import useLog from '../hooks/useLog'
@@ -6,9 +5,10 @@ import { useEffect, useState } from 'react'
 import PanelFooter from './inputs/autocomplete/PanelFooter'
 import useLogCategory from '../hooks/useLogCategory'
 import { useLogStore } from '../store/logs'
+import Button from './common/buttons'
 
 const CreateLogForm = ({ onCreated = () => {} }) => {
-  const { handleLogCreation, handleChange, isLogCreating, formRef } =
+  const { handleLogCreation, handleChange, isLogCreating, formRef, log } =
     useLog()
   const logCategories = useLogStore((state) => state.logCategories)
   const { getAllUserLogCategories } = useLogCategory()
@@ -40,20 +40,22 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
     <form className='flex flex-col gap-y-3' ref={formRef}>
       <div className='flex flex-col gap-y-2'>
         <label htmlFor='title'>Título</label>
-        <input id='title' name='title' onChange={handleChange} />
+        <input id='title' name='title' onChange={(e) => handleChange(e.target)} />
       </div>
       <div className='flex flex-col gap-y-2'>
         <label htmlFor='category'>Categoría</label>
         <AutoComplete
-          value={selectedLogCategory}
+          id='category'
+          name='category'
+          value={log.category}
           suggestions={filteredLogCategories}
           completeMethod={search}
-          onChange={(e) => setSelectedLogCategory(e.value)}
+          onChange={(e) => handleChange(e.target)}
           panelFooterTemplate={
             <PanelFooter
               items={filteredLogCategories}
               selectedItem={selectedLogCategory}
-              onCreated={(newValue) => setSelectedLogCategory(newValue)}
+              onCreated={(newValue) => handleChange({ name: 'category', value: newValue })}
             />
           }
           showEmptyMessage
@@ -68,16 +70,15 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
           id='date'
           name='date'
           required
-          onChange={handleChange}
+          onChange={(e) => handleChange(e.target)}
           showIcon
         />
       </div>
-      <Button
-        type='button'
+      <Button 
         label='Crear'
         onClick={() => handleLogCreation(onCreated)}
         loading={isLogCreating}
-        className='text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2'
+        className='font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2'
       />
     </form>
   )
