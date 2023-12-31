@@ -1,5 +1,4 @@
-import { useRef, useState } from 'react'
-import { useSearchFilter } from '../store/searchFilter'
+import { useState } from 'react'
 import { Dialog } from 'primereact/dialog'
 import { Avatar } from 'primereact/avatar'
 import CreateLogForm from './CreateLogForm'
@@ -8,14 +7,7 @@ import Button from './common/buttons'
 import SignOutButton from './common/buttons/SignOut'
 
 const Header = () => {
-  const addSearchFilter = useSearchFilter((state) => state.addSearchFilter)
   const [isModalOpen, setModalOpen] = useState(false)
-  const titleInputRef = useRef(null)
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    addSearchFilter('title', titleInputRef.current.value)
-  }
 
   const handleLogout = async () => {
     await logout()
