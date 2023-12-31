@@ -1,4 +1,4 @@
-import { Button } from 'primereact/button'
+import Button from '../../common/buttons'
 import useLogCategory from '../../../hooks/useLogCategory'
 import { useEffect } from 'react'
 
@@ -20,12 +20,12 @@ const PanelFooter = ({ items = [], selectedItem, onCreated = () => {} }) => {
           <b>{selectedItem}</b> selected.
         </span>
       )}
-      {Boolean(items.length) && !isItemSelected && 'Aún no has seleccionado.'}
+      {Boolean(items.length) && !isItemSelected && 'Sin seleccionar'}
 
       {!items.length && selectedItem && Boolean(selectedItem.length) && (
         <Button
           type='button'
-          label='Crear nuevo'
+          label='Crear categoría'
           loading={isLogCategoryCreating}
           onClick={() => handleLogCategoryCreation({ onSuccess: onCreated })}
         />

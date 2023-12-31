@@ -14,7 +14,6 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
   const { getAllUserLogCategories } = useLogCategory()
 
   const [filteredLogCategories, setFilteredLogCategories] = useState([])
-  const [selectedLogCategory, setSelectedLogCategory] = useState(null)
 
   const search = (event) => {
     let filteredItems
@@ -54,7 +53,7 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
           panelFooterTemplate={
             <PanelFooter
               items={filteredLogCategories}
-              selectedItem={selectedLogCategory}
+              selectedItem={log.category}
               onCreated={(newValue) => handleChange({ name: 'category', value: newValue })}
             />
           }
