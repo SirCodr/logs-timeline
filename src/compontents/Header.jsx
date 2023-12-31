@@ -5,6 +5,7 @@ import { Avatar } from 'primereact/avatar'
 import CreateLogForm from './CreateLogForm'
 import { logout } from '../services/auth'
 import Button from './common/buttons'
+import SignOutButton from './common/buttons/SignOut'
 
 const Header = () => {
   const addSearchFilter = useSearchFilter((state) => state.addSearchFilter)
@@ -25,9 +26,9 @@ const Header = () => {
     <header className='flex justify-end'>
       <section className='flex items-center gap-x-3'>
         <Button label='Nuevo' onClick={() => setModalOpen(true)}/>
-        <button onClick={handleLogout} title='Cerrar sesión'>
-          <Avatar icon="pi pi-power-off" size="normal" shape="circle" />
-        </button>
+        <SignOutButton onClick={handleLogout} title='Cerrar sesión'>
+          <Avatar icon="pi pi-power-off" size="normal" shape="circle" className='bg-red-primary hover:bg-red-700' />
+        </SignOutButton>
       </section>
 
       <Dialog
