@@ -8,6 +8,7 @@ import { useLogStore } from '../../store/logs'
 import { ProgressSpinner } from 'primereact/progressspinner';
 import useLog from '../../hooks/useLog'
 import EmptyState from '../../compontents/states/empty'
+import { formatDate } from '../../utils/date'
 
 function HomePage() {
   const { getAllUserLogs, areAllLogsQuering }  = useLog()
@@ -20,16 +21,17 @@ function HomePage() {
   }, [])
 
   useEffect(() => {
+    const logsTransformed = logs.map(log => ({...log, date: formatDate(log.date)}))
     if (currentFilters && currentFilters.title) {
       const dataFiltered = groupAndFilterData({
-        data: logs,
+        data: logsTransformed,
         groupBy: 'date',
         filterBy: 'title',
         filterValue: currentFilters.title
       })
       setData(dataFiltered)
     } else {
-      setData(groupDataBy(logs, 'date'))
+      setData(groupDataBy(logsTransformed, 'date'))
     }
   }, [logs, currentFilters])
 
