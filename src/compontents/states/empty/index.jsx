@@ -1,4 +1,4 @@
-import NotFoundIcon from '../../icons/notFound'
+import NotFoundIcon from '../../icons/NotFound'
 
 const EmptyState = ({ message, children }) => {
   return (
