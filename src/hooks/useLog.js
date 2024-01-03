@@ -22,12 +22,14 @@ const useLog = () => {
   })
   const createLog = useMutation(insertLog)
 
-  const getAllUserLogs = () => AllUserLogsQuery.refetch()
+  function getAllUserLogs() {
+    return AllUserLogsQuery.refetch()
+  }
 
-  const handleLogCreation = (onCreated = () => {}) => {
+  function handleLogCreation(onCreated = () => { }) {
     if (!validateCreationLog()) return renderErrorToast('Invalid log data')
 
-     createLog.mutate({
+    createLog.mutate({
       ...log,
       category: log.category.id
     }, {
@@ -43,9 +45,11 @@ const useLog = () => {
     })
   }
 
-  const validateCreationLog = () => arePropsValid(log, CREATE_LOG_SCHEMA)
+  function validateCreationLog() {
+    return arePropsValid(log, CREATE_LOG_SCHEMA)
+  }
 
-  const handleChange = (event) => {
+  function handleChange(event) {
     const { name, value } = event
 
     setLog((prevLog) => ({ ...prevLog, [name]: value }))
