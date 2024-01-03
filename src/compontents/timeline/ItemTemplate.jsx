@@ -1,5 +1,6 @@
 import { Card } from 'primereact/card'
 import { Badge } from 'primereact/badge'
+import { Tag } from 'primereact/tag'
 
 const ItemTemplate = ({ item }) => {
   const { groupLabel, groupValue, items } = item
@@ -9,12 +10,18 @@ const ItemTemplate = ({ item }) => {
         <strong>{groupValue}</strong>
       </p>
       <ul className='flex flex-col gap-y-3'>
-        {items.map((item, index) => (
-          <li key={index} className='flex items-baseline gap-x-2'>
-            <Badge className='bg-black' />
-            {item.title}
-          </li>
-        ))}
+        {items.map((item, index) => {
+          const { id, title, category } = item
+          return (
+            (
+            <li key={id} className='flex items-baseline gap-x-2'>
+              <Badge className='bg-black' />
+              {title}
+              <Tag value={category.name} />
+            </li>
+          )
+          )
+        })}
       </ul>
     </Card>
   )

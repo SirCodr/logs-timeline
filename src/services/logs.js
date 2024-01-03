@@ -5,7 +5,7 @@ export const fetchAllLogsByUserId = async () => {
   return handleRequest(async ({ userSession }) => {
     return await supabase
       .from('logs')
-      .select('*')
+      .select('id, title, date, created_at, updated_at, category:log_categories(id, name)')
       .eq('user_id', userSession.user.id)
       .order('date', { ascending: false })
   })
