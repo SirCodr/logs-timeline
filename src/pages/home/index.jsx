@@ -1,9 +1,8 @@
 import { Timeline } from 'primereact/timeline'
 import { useEffect, useState } from 'react'
 import ItemTemplate from '../../compontents/timeline/ItemTemplate'
-import { groupAndFilterData, groupDataBy } from '../../utils/collect'
+import { groupDataBy } from '../../utils/collect'
 import Header from '../../compontents/Header'
-import { useSearchFilter } from '../../store/searchFilter'
 import { useLogStore } from '../../store/logs'
 import { ProgressSpinner } from 'primereact/progressspinner';
 import useLog from '../../hooks/useLog'
@@ -12,7 +11,6 @@ import { formatDate } from '../../utils/date'
 
 function HomePage() {
   const { getAllUserLogs, areAllLogsQuering }  = useLog()
-  const  currentFilters = useSearchFilter(state => state.currentFilters)
   const [logs] = useLogStore(state => [state.logs])
   const [data, setData] = useState([])
 
@@ -22,18 +20,8 @@ function HomePage() {
 
   useEffect(() => {
     const logsTransformed = logs.map(log => ({...log, date: formatDate(log.date)}))
-    if (currentFilters && currentFilters.title) {
-      const dataFiltered = groupAndFilterData({
-        data: logsTransformed,
-        groupBy: 'date',
-        filterBy: 'title',
-        filterValue: currentFilters.title
-      })
-      setData(dataFiltered)
-    } else {
-      setData(groupDataBy(logsTransformed, 'date'))
-    }
-  }, [logs, currentFilters])
+    setData(groupDataBy(logsTransformed, 'date'))
+  }, [logs])
 
   if (areAllLogsQuering) return <ProgressSpinner className='w-12 h-12' />
 
