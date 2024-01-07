@@ -20,7 +20,7 @@ function HomePage() {
 
   useEffect(() => {
     const logsTransformed = logs.map(log => ({...log, date: formatDate(log.date)}))
-    setData(groupDataBy(logsTransformed, 'date'))
+    setData(groupDataBy(logsTransformed, 'date', 'categoryName'))
   }, [logs])
 
   if (areAllLogsQuering) return <ProgressSpinner className='w-12 h-12' />

@@ -10,14 +10,14 @@ const ItemTemplate = ({ item }) => {
         <strong>{groupValue}</strong>
       </p>
       <ul className='flex flex-col gap-y-3'>
-        {items.map((item, index) => {
-          const { id, title, category } = item
+        {items && items.map((item, index) => {
+          const { id, title, label } = item
           return (
             (
             <li key={id} className='flex items-baseline gap-x-2'>
               <Badge className='bg-black' />
               {title}
-              <Tag value={category.name} />
+              {label && <Tag value={item[label]} />}
             </li>
           )
           )
