@@ -1,0 +1,1 @@
+export const NO_RESULTS_FOUND_MESSAGE = 'No se encontraron resultados'
