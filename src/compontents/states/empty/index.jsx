@@ -1,3 +1,4 @@
+import { NO_RESULTS_FOUND_MESSAGE } from '../../../consts/stateMessages'
 import NotFoundIcon from '../../icons/NotFound'
 
 const EmptyState = ({ message, children }) => {
@@ -7,7 +8,7 @@ const EmptyState = ({ message, children }) => {
         <NotFoundIcon />
       </section>
       <section className='w-full'>
-        <strong>No results found</strong>
+        <strong>{NO_RESULTS_FOUND_MESSAGE}</strong>
         {message && <small>{message}</small>}
         {children}
       </section>
