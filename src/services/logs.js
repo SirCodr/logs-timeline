@@ -3,11 +3,9 @@ import handleRequest from './requestHandler'
 
 export const fetchAllLogsByUserId = async () => {
   return handleRequest(async ({ userSession }) => {
-    return await supabase
-      .from('logs')
-      .select('id, title, date, created_at, updated_at, category:log_categories(id, name)')
-      .eq('user_id', userSession.user.id)
-      .order('date', { ascending: false })
+    return await supabase.rpc('get_all_logs_by_user_id', {
+      userid: userSession.user.id
+    })
   })
 }
 
