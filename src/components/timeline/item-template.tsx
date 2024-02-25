@@ -5,7 +5,7 @@ import { Tag } from 'primereact/tag'
 import { Log } from "../../types/log"
 
 const ItemTemplate = ({ item }: { item: GroupedData }) => {
-  const { groupValue, items } = item
+  const {groupLabel, groupValue, items } = item
 
   return (
     <Card>
@@ -14,13 +14,14 @@ const ItemTemplate = ({ item }: { item: GroupedData }) => {
       </p>
       <ul className='flex flex-col gap-y-3'>
         {items && items.map((item: Log) => {
-          const { id, title, categoryName } = item
+          const { id, title, categoryName, date } = item
+
           return (
             (
             <li key={id} className='flex items-baseline gap-x-2'>
               <Badge className='bg-black' />
               {title}
-              <Tag value={categoryName} />
+              <Tag value={groupLabel === 'categoryName' ? date : categoryName} />
             </li>
           )
           )
