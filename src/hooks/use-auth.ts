@@ -1,4 +1,3 @@
-import { AuthError } from "@supabase/supabase-js"
 import { logout, signInWithGoogle } from "../services/auth"
 
 const useAuth = () => {
@@ -8,9 +7,10 @@ const useAuth = () => {
     if (data.url)location.assign(data.url)
   }
 
-  async function handleLogout(): Promise<AuthError | null> {
+  async function handleLogout(): Promise<void> {
     const { error } = await logout()
-    return error
+    
+    if (!error) location.reload()
   }
 
   return (
