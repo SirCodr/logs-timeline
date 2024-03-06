@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { Log, LogFilterKeyOption } from '../types/log'
+import { Log } from '../types/log'
 import { GroupedData } from '../types/transformed-data'
 import { devtools } from 'zustand/middleware'
 import { DEFAULT_LOG_FILTER_KEY } from '../consts/logs'
@@ -8,10 +8,10 @@ interface LogSlice {
   originalLogs: Log[]
   transformedLogs: GroupedData[]
   logCategories: Array<T>,
-  filterKey: LogFilterKeyOption,
+  filterKey: keyof Log,
   setOriginalLogs: (logs: Log[]) => void
   setTransformedLogs: (logs: GroupedData[]) => void
-  setFilterKey: (key: LogFilterKeyOption) => void
+  setFilterKey: (key: keyof Log) => void
 }
 
 export const useLogStore = create<LogSlice>()(devtools((set) => ({

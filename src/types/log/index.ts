@@ -12,5 +12,3 @@ export interface LogCategory {
   id: number
   name: string
 }
-
-export type LogFilterKeyOption = 'date' | 'categoryName'

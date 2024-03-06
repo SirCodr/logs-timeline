@@ -1,3 +1,3 @@
-import { LogFilterKeyOption } from "../types/log";
+import { Log } from "../types/log";
 
-export const DEFAULT_LOG_FILTER_KEY: LogFilterKeyOption = 'date'
+export const DEFAULT_LOG_FILTER_KEY: keyof Log = 'date'
