@@ -9,28 +9,23 @@ import { useEffect } from 'react'
 import Header from '../../components/header'
 
 const HomePage = () => {
-  const { getAllUserLogs } = useLog()
+  const { logsQuery, getAllUserLogs } = useLog()
 
   const [
     originalLogs,
     transformedLogs,
-    setOriginalLogs,
     setTransformedLogs,
     filterKey
   ] = useLogStore((state) => [
     state.originalLogs,
     state.transformedLogs,
-    state.setOriginalLogs,
     state.setTransformedLogs,
     state.filterKey
   ])
-  const logsQuery = useQuery({
-    queryKey: ['logs', 'all', 'user'],
-    queryFn: getAllUserLogs,
-    onSuccess: (res) => {
-      setOriginalLogs(res)
-    }
-  })
+
+  useEffect(() => {
+    getAllUserLogs()
+  }, [])
 
   useEffect(() => {
     if (originalLogs && originalLogs.length) {
@@ -41,7 +36,6 @@ const HomePage = () => {
 
   if (logsQuery.isLoading) return 'loading'
 
-  if (!transformedLogs.length) return 'no data'
   return (
     <main className='h-screen'>
       <div className='w-screen h-screen absolute inset-0 -z-10 bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem]'>

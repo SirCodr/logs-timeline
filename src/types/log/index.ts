@@ -8,6 +8,12 @@ export interface Log {
   categoryName: string
 }
 
+export interface LogForServer {
+  title: string
+  date: string
+  category_id: string
+}
+
 export interface LogCategory {
   id: number
   name: string
