@@ -7,8 +7,8 @@ export function groupDataBy(data: Array<T>, groupKey: string): GroupedData[] {
     groupLabel: '',
     items: []
   }]
-
-  const dataGrouped = collect(data).groupBy(groupKey).all()
+  
+  const dataGrouped = collect(data).sortBy('date').groupBy(groupKey).all()
 
   const res = Array.from(Object.entries(dataGrouped)).map((itemGrouped) => {
     const key = itemGrouped[0]
