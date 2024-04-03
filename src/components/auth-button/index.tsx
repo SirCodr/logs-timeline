@@ -1,8 +1,8 @@
 import useAuth from '../../hooks/use-auth'
 import GoogleIcon from '../icons/google-icon'
 
-const AuthButton = ({ userLogged }) => {
-  const { handleSignIn, handleSignOut } = useAuth()
+const AuthButton = ({ userLogged }: { userLogged: boolean }): JSX.Element => {
+  const { handleSignIn, handleLogout } = useAuth()
 
   if (!userLogged) {
     return (
@@ -20,7 +20,7 @@ const AuthButton = ({ userLogged }) => {
   return (
     <button
       type='button'
-      onClick={handleSignOut}
+      onClick={handleLogout}
       className='text-white bg-red-primary hover:bg-red-primary/90 focus:ring-4 focus:outline-none focus:ring-red-primary/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-red-primary/55 mr-2 mb-2'
     >
       <GoogleIcon />

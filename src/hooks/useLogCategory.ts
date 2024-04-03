@@ -7,6 +7,7 @@ import {
 } from '../services/logCategories'
 import { renderErrorToast, renderSuccessToast } from '../utils/toast'
 import { useLogStore } from '../store/logs'
+import { LogCategory } from '../types/log'
 
 const useLogCategory = () => {
   const [addLogCategory, setLogCategories] = useLogStore((state) => [
@@ -17,7 +18,7 @@ const useLogCategory = () => {
 
   const allUserLogCategoriesQuery = useQuery({
     queryKey: ['logCategories', 'all', 'user'],
-    queryFn: fetchAllLogCategoriesByUserId,
+    queryFn: fetchAllLogCategoriesByUserId<LogCategory>,
     onSuccess: (res) => {
       setLogCategories(res.data)
     },
@@ -36,7 +37,7 @@ const useLogCategory = () => {
         name: category
       },
       {
-        onSuccess: (data) => {
+        onSuccess: ({ data }) => {
           addLogCategory(data[0])
           renderSuccessToast('Categoria creada con éxito')
           onSuccess(data[0])

@@ -1,4 +1,4 @@
-const GoogleIcon = () => {
+const GoogleIcon = (): JSX.Element => {
   return (
     <svg
       className='w-4 h-4 mr-2'

@@ -24,10 +24,10 @@ const useLog = () => {
 
   async function getAllLogs(): Promise<Log[]> {
     try {
-      const req = await fetchAllLogs()
-      const res: httpResponse = req.data
+      const req = await fetchAllLogs<Log>()
+      const res = req.data
 
-      if (res.data) return res.data as Log[]
+      if (res) return res
 
       return []
     } catch (error) {

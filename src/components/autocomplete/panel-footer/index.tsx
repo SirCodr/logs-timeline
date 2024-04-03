@@ -2,9 +2,14 @@ import Button from '../../common/buttons'
 import useLogCategory from '../../../hooks/useLogCategory'
 import { useEffect } from 'react'
 
-const PanelFooter = ({ items = [], selectedItem, onCreated = () => {} }) => {
-  const { handleChange, handleLogCategoryCreation, createLogCategoryMutation } =
-    useLogCategory()
+function PanelFooter<T = unknown>({
+  items = [], selectedItem, onCreated = () => { }
+}: {
+  items: T[]
+  selectedItem: unknown
+  onCreated: () => void
+}) {
+  const { handleChange, handleLogCategoryCreation, createLogCategoryMutation } = useLogCategory()
   const isItemSelected = items.some((item) => item['name'] === selectedItem)
 
   useEffect(() => {
@@ -27,8 +32,7 @@ const PanelFooter = ({ items = [], selectedItem, onCreated = () => {} }) => {
           type='button'
           label='Crear categoría'
           loading={createLogCategoryMutation.isLoading}
-          onClick={() => handleLogCategoryCreation({ onSuccess: onCreated })}
-        />
+          onClick={() => handleLogCategoryCreation({ onSuccess: onCreated })} />
       )}
     </div>
   )
