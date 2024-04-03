@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { RefObject, useState } from 'react'
 import { useLogStore } from '../store/logs'
 import { useMutation } from 'react-query'
 import { renderErrorToast } from '../utils/toast'
@@ -13,7 +13,7 @@ const INITIAL_LOG:LogForServer = {
   category_id: '',
 }
 
-const UseLogForm = (ref: HTMLFormElement) => {
+const UseLogForm = (ref: RefObject<HTMLFormElement>) => {
   const [log, setLog] = useState<LogForServer>(INITIAL_LOG)
   const [addToOriginalLog] = useLogStore((state) => [
     state.addToOriginalLog

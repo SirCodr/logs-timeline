@@ -1,4 +1,4 @@
-import { AutoComplete } from 'primereact/autocomplete'
+import { AutoComplete, AutoCompleteCompleteEvent } from 'primereact/autocomplete'
 import { Calendar } from 'primereact/calendar'
 import { useEffect, useRef, useState } from 'react'
 import UseLogForm from '../../../hooks/use-log-form'
@@ -10,14 +10,14 @@ import { LogCategory } from '../../../types/log'
 
 const CreateLogForm = ({ onCreated = () => {} }) => {
   const formRef = useRef<HTMLFormElement>(null)
-  const { createLogMutation, handleLogCreation, handleChange, handleDateChange, log } = UseLogForm(formRef)
+  const { createLogMutation, handleLogCreation, handleChange, handleDateChange } = UseLogForm(formRef)
   const logCategories = useLogStore((state) => state.logCategories)
   const [selectedCategory, setCategory] = useState<LogCategory | null>(null)
   const { getAllUserLogCategories } = useLogCategory()
 
   const [filteredLogCategories, setFilteredLogCategories] = useState<LogCategory[]>([])
 
-  const search = (event) => {
+  const search = (event: AutoCompleteCompleteEvent) => {
     let filteredItems
 
     if (!event.query.trim().length) {
@@ -61,9 +61,9 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
           completeMethod={search}
           onChange={(e) => setCategory(e.value)}
           panelFooterTemplate={
-            <PanelFooter<LogCategory>
+            <PanelFooter
               items={filteredLogCategories}
-              selectedItem={selectedCategory}
+              selectedItem={selectedCategory?.name ?? ''}
               onCreated={(newValue) => handleChange({ name: 'category', value: newValue })}
             />
           }
@@ -84,7 +84,6 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
         />
       </div>
       <Button
-        type='button'
         label='Crear'
         onClick={() => handleLogCreation(onCreated)}
         loading={createLogMutation.isLoading}

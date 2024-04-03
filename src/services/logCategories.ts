@@ -19,7 +19,7 @@ export async function insertLogCategory(logCategory: LogCategory): Promise<httpR
   })
 }
 
-export async function insertLogCategoryAndFetchLast(logCategory: LogCategory): Promise<httpResponse> {
+export async function insertLogCategoryAndFetchLast(logCategory: Omit<LogCategory, 'id'>): Promise<httpResponse> {
   return handleRequest(async ({ userSession }) => {
     return await supabase.from('log_categories').insert({
       ...logCategory,

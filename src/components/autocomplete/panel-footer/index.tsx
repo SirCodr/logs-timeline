@@ -1,19 +1,20 @@
 import Button from '../../common/buttons'
 import useLogCategory from '../../../hooks/useLogCategory'
 import { useEffect } from 'react'
+import { LogCategory } from '../../../types/log'
 
-function PanelFooter<T = unknown>({
+function PanelFooter({
   items = [], selectedItem, onCreated = () => { }
 }: {
-  items: T[]
-  selectedItem: unknown
-  onCreated: () => void
+  items: LogCategory[]
+  selectedItem: string
+  onCreated: (item: string) => void
 }) {
   const { handleChange, handleLogCategoryCreation, createLogCategoryMutation } = useLogCategory()
-  const isItemSelected = items.some((item) => item['name'] === selectedItem)
+  const isItemSelected = items.some((item) =>  item.name === selectedItem)
 
   useEffect(() => {
-    handleChange({ target: { value: selectedItem } })
+    handleChange(selectedItem)
   }, [selectedItem])
 
   if (!items.length && !selectedItem) return <></>

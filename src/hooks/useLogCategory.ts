@@ -14,7 +14,7 @@ const useLogCategory = () => {
     state.addLogCategory,
     state.setLogCategories
   ])
-  const [category, setCategory] = useState(null)
+  const [category, setCategory] = useState<string>('')
 
   const allUserLogCategoriesQuery = useQuery({
     queryKey: ['logCategories', 'all', 'user'],
@@ -31,7 +31,7 @@ const useLogCategory = () => {
 
   const getAllUserLogCategories = () => allUserLogCategoriesQuery.refetch()
 
-  const handleLogCategoryCreation = ({ onSuccess = () => {} }) => {
+  const handleLogCategoryCreation = ({ onSuccess = () => {} }: { onSuccess?: (prop: string) => void } ) => {
     createLogCategoryAndFetchLast.mutate(
       {
         name: category
@@ -43,15 +43,15 @@ const useLogCategory = () => {
           onSuccess(data[0])
         },
         onError: (error) => {
-          renderErrorToast(error.message)
+          renderErrorToast(error as string)
           console.log(error)
         }
       }
     )
   }
 
-  const handleChange = (e) => {
-    setCategory(e.target.value)
+  const handleChange = (value: string) => {
+    setCategory(value)
   }
 
   return {
