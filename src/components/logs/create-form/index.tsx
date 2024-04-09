@@ -13,7 +13,7 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
   const formRef = useRef<HTMLFormElement>(null)
   const { log, createLogMutation, handleLogCreation, handleChange, handleDateChange } = UseLogForm(formRef)
   const logCategories = useLogStore((state) => state.logCategories)
-  const [selectedCategory, setCategory] = useState<LogCategory | null>(null)
+  const [selectedCategory, setCategory] = useState<string>('')
   const { getAllUserLogCategories } = useLogCategory()
 
   const [filteredLogCategories, setFilteredLogCategories] = useState<LogCategory[]>([])
@@ -38,10 +38,6 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
     }
   }, [])
 
-  useEffect(() => {
-    handleChange({ key: 'category_id', value: selectedCategory ? selectedCategory.id : null })
-  }, [selectedCategory])
-
   return (
     <form className='flex flex-col gap-y-3' ref={formRef}>
       <div className='flex flex-col gap-y-2'>
@@ -58,15 +54,24 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
         <AutoComplete
           id='category'
           name='category'
-          value={selectedCategory ? selectedCategory.name : null}
+          value={selectedCategory}
           suggestions={filteredLogCategories}
           completeMethod={search}
-          onChange={(e) => setCategory(e.value)}
+          onChange={(e) => {
+            if (e.originalEvent?.type !== 'change') return
+
+            setCategory(e.value)
+          }}
+          onSelect={(e) => {
+            const itemSelected: LogCategory = e.value
+            setCategory(itemSelected.name)
+            handleChange({ key: 'category_id', value: itemSelected.id })
+          }}
           panelFooterTemplate={
             <PanelFooter
               items={filteredLogCategories}
-              selectedItem={selectedCategory?.name ?? ''}
-              onCreated={(newValue) => handleChange({ key: 'category', value: newValue })}
+              selectedItem={selectedCategory}
+              onCreated={(newValue) => handleChange({ key: 'category_id', value: newValue.id })}
             />
           }
           showEmptyMessage

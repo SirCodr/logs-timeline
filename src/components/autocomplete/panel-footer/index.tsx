@@ -8,7 +8,7 @@ function PanelFooter({
 }: {
   items: LogCategory[]
   selectedItem: string
-  onCreated: (item: string) => void
+  onCreated: (item: LogCategory) => void
 }) {
   const { handleChange, handleLogCategoryCreation, createLogCategoryMutation } = useLogCategory()
   const isItemSelected = items.some((item) =>  item.name === selectedItem)

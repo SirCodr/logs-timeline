@@ -15,6 +15,6 @@ export interface LogForServer {
 }
 
 export interface LogCategory {
-  id: number
+  id: number | null
   name: string
 }
