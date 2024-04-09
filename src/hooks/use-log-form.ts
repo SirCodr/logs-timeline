@@ -8,7 +8,7 @@ import { insertLog } from '../services/logs'
 
 const INITIAL_LOG:LogForServer = {
   title: '',
-  date: '',
+  date: DateTime.now().toISO(),
   category_id: '',
 }
 

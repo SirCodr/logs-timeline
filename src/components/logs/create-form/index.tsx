@@ -7,10 +7,11 @@ import Button from '../../common/buttons'
 import useLogCategory from '../../../hooks/useLogCategory'
 import PanelFooter from '../../autocomplete/panel-footer'
 import { LogCategory } from '../../../types/log'
+import { DateTime } from 'luxon'
 
 const CreateLogForm = ({ onCreated = () => {} }) => {
   const formRef = useRef<HTMLFormElement>(null)
-  const { createLogMutation, handleLogCreation, handleChange, handleDateChange } = UseLogForm(formRef)
+  const { log, createLogMutation, handleLogCreation, handleChange, handleDateChange } = UseLogForm(formRef)
   const logCategories = useLogStore((state) => state.logCategories)
   const [selectedCategory, setCategory] = useState<LogCategory | null>(null)
   const { getAllUserLogCategories } = useLogCategory()
@@ -48,6 +49,7 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
         <input
           id='title'
           name='title'
+          value={log.title}
           onChange={(e) => handleChange({ key: e.target.name, value: e.target.value })}
         />
       </div>
@@ -78,6 +80,7 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
         <Calendar
           id='date'
           name='date'
+          value={DateTime.fromISO(log.date).toJSDate()}
           required
           onChange={(e) => handleDateChange(e.target.value ?? null)}
           showIcon
