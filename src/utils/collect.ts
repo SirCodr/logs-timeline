@@ -12,7 +12,7 @@ export function groupDataBy<T>(data: Array<T>, groupKey: string): GroupedData<T>
     items: []
   }]
   
-  const dataGrouped = collect<T>(data).sortBy('date').groupBy(groupKey).all() as DataCollected<T>[]
+  const dataGrouped = collect<T>(data).sortByDesc('date').groupBy(groupKey).all() as DataCollected<T>[]
 
   const res = Array.from(Object.entries(dataGrouped)).map((itemGrouped) => {
     const key = itemGrouped[0]
