@@ -32,7 +32,7 @@ function PanelFooter({
         <Button
           type='button'
           label='Crear categoría'
-          loading={createLogCategoryMutation.isLoading}
+          loading={createLogCategoryMutation.isLoading}//Fix loader, it's not working
           onClick={() => handleLogCategoryCreation({ onSuccess: onCreated })} />
       )}
     </div>
