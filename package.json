@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.7",
+    "@types/luxon": "^3.4.2",
     "axios": "^1.6.7",
     "collect.js": "^4.36.1",
     "luxon": "^3.4.4",

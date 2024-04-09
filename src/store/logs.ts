@@ -6,11 +6,11 @@ import { DEFAULT_LOG_FILTER_KEY } from '../consts/logs'
 
 interface LogSlice {
   originalLogs: Log[]
-  transformedLogs: GroupedData[]
+  transformedLogs: GroupedData<Log>[]
   logCategories: LogCategory[]
   filterKey: keyof Log
   setOriginalLogs: (logs: Log[]) => void
-  setTransformedLogs: (logs: GroupedData[]) => void
+  setTransformedLogs: (logs: GroupedData<Log>[]) => void
   setLogCategories: (logs: LogCategory[]) => void
   setFilterKey: (key: keyof Log) => void
   addToOriginalLog: (log: Log) => void

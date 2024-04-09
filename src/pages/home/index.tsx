@@ -1,5 +1,4 @@
 import { Timeline } from 'primereact/timeline'
-import { useQuery } from 'react-query'
 import useLog from '../../hooks/use-log'
 import { useLogStore } from '../../store/logs'
 import { groupDataBy } from '../../utils/collect'
@@ -7,6 +6,7 @@ import { GroupedData } from '../../types/transformed-data'
 import ItemTemplate from '../../components/timeline/item-template'
 import { useEffect } from 'react'
 import Header from '../../components/header'
+import { Log } from '../../types/log'
 
 const HomePage = () => {
   const { logsQuery, getAllUserLogs } = useLog()
@@ -29,7 +29,7 @@ const HomePage = () => {
 
   useEffect(() => {
     if (originalLogs && originalLogs.length) {
-      const transformedData = groupDataBy(originalLogs, filterKey)
+      const transformedData = groupDataBy<Log>(originalLogs, filterKey)
       setTransformedLogs(transformedData)
     }
   }, [originalLogs, filterKey])
@@ -46,7 +46,7 @@ const HomePage = () => {
         <Timeline
           value={transformedLogs}
           align='alternate'
-          content={(item: GroupedData) => <ItemTemplate item={item} />}
+          content={(item: GroupedData<Log>) => <ItemTemplate item={item} />}
           pt={{
             marker: { className: 'border-2 border-red-500' }
           }}

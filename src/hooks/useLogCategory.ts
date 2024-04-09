@@ -24,7 +24,7 @@ const useLogCategory = () => {
     },
     enabled: false
   })
-  const createLogCategoryMutation = useMutation(insertLogCategory)
+  const createLogCategoryMutation = useMutation(insertLogCategory<LogCategory>)
   const createLogCategoryAndFetchLast = useMutation(
     insertLogCategoryAndFetchLast
   )

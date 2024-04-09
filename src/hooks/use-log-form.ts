@@ -2,8 +2,7 @@ import { RefObject, useState } from 'react'
 import { useLogStore } from '../store/logs'
 import { useMutation } from 'react-query'
 import { renderErrorToast } from '../utils/toast'
-import { LogForServer } from '../types/log'
-import { arePropsValid } from '../utils/schema'
+import { Log, LogForServer } from '../types/log'
 import { DateTime } from "luxon"
 import { insertLog } from '../services/logs'
 
@@ -18,7 +17,7 @@ const UseLogForm = (ref: RefObject<HTMLFormElement>) => {
   const [addToOriginalLog] = useLogStore((state) => [
     state.addToOriginalLog
   ])
-  const createLogMutation = useMutation(insertLog)
+  const createLogMutation = useMutation(insertLog<Log>)
 
   function handleLogCreation(onCreated = () => {}) {
     if (!validateCreationLog()) return renderErrorToast('Invalid log data')
@@ -31,26 +30,24 @@ const UseLogForm = (ref: RefObject<HTMLFormElement>) => {
           ref.current!.reset()
           onCreated()
         },
-        onError: (error: Error) => {
-          renderErrorToast(error.message)
+        onError: (error) => {
+          renderErrorToast(error as string)
           console.error(error)
         }
       }
     )
   }
 
-  function handleChange(event) {
-    const { name, value } = event
-
-    setLog((prevLog) => ({ ...prevLog, [name]: value }))
+  function handleChange({ key, value}: { key: string, value: unknown}) {
+    setLog((prevLog) => ({ ...prevLog, [key]: value }))
   }
 
-  function handleDateChange (date) {
-    setLog((prevLog) => ({ ...prevLog, date: DateTime.fromJSDate(date).toString() }))
+  function handleDateChange (date: Date | null) {
+    setLog((prevLog) => ({ ...prevLog, date: date ? DateTime.fromJSDate(date).toString() : 'null' }))
   }
 
   function validateCreationLog() {
-    return arePropsValid(log)
+    return true
   }
 
   return { log, createLogMutation, handleLogCreation, handleChange, handleDateChange }

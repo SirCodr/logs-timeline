@@ -1,5 +1,5 @@
-export interface GroupedData {
+export interface GroupedData<T = unknown> {
   groupLabel: string
   groupValue: string
-  items: Array<T>
+  items: T[]
 }

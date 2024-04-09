@@ -38,7 +38,7 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
   }, [])
 
   useEffect(() => {
-    handleChange({ name: 'category_id', value: selectedCategory ? selectedCategory.id : null })
+    handleChange({ key: 'category_id', value: selectedCategory ? selectedCategory.id : null })
   }, [selectedCategory])
 
   return (
@@ -48,7 +48,7 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
         <input
           id='title'
           name='title'
-          onChange={(e) => handleChange(e.target)}
+          onChange={(e) => handleChange({ key: e.target.name, value: e.target.value })}
         />
       </div>
       <div className='flex flex-col gap-y-2'>
@@ -64,7 +64,7 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
             <PanelFooter
               items={filteredLogCategories}
               selectedItem={selectedCategory?.name ?? ''}
-              onCreated={(newValue) => handleChange({ name: 'category', value: newValue })}
+              onCreated={(newValue) => handleChange({ key: 'category', value: newValue })}
             />
           }
           showEmptyMessage
@@ -79,7 +79,7 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
           id='date'
           name='date'
           required
-          onChange={(e) => handleDateChange(e.target.value)}
+          onChange={(e) => handleDateChange(e.target.value ?? null)}
           showIcon
         />
       </div>

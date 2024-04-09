@@ -4,7 +4,7 @@ import { Badge } from 'primereact/badge'
 import { Tag } from 'primereact/tag'
 import { Log } from "../../types/log"
 
-const ItemTemplate = ({ item }: { item: GroupedData }) => {
+const ItemTemplate = ({ item }: { item: GroupedData<Log> }) => {
   const {groupLabel, groupValue, items } = item
 
   return (
@@ -13,7 +13,7 @@ const ItemTemplate = ({ item }: { item: GroupedData }) => {
         <strong>{groupValue}</strong>
       </p>
       <ul className='flex flex-col gap-y-3'>
-        {items && items.map((item: Log) => {
+        {items && items.map((item) => {
           const { id, title, categoryName, date } = item
 
           return (

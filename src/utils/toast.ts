@@ -1,7 +1,7 @@
-import { toast } from "sonner";
+import { ToastT, toast } from "sonner";
 import { DEFAULT_TOAST_CONFIG } from "../consts/toast";
 
-export function renderToast (message: string, config = {}): void {
+export function renderToast (message: string, config: ToastT ): void {
   toast(message, { ...DEFAULT_TOAST_CONFIG, ...config })
 }
 
