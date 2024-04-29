@@ -31,7 +31,7 @@ const useLogCategory = () => {
 
   const getAllUserLogCategories = () => allUserLogCategoriesQuery.refetch()
 
-  const handleLogCategoryCreation = ({ onSuccess = () => {} }: { onSuccess?: (prop: string) => void } ) => {
+  const handleLogCategoryCreation = ({ onSuccess = () => {} }: { onSuccess?: (prop: LogCategory) => void } ) => {
     createLogCategoryAndFetchLast.mutate(
       {
         name: category
