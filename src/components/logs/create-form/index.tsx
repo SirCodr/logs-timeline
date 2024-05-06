@@ -14,6 +14,7 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
   const { log, createLogMutation, handleLogCreation, handleChange, handleDateChange } = UseLogForm(formRef)
   const logCategories = useLogStore((state) => state.logCategories)
   const [selectedCategory, setCategory] = useState<string>('')
+  const autocompleteRef = useRef<AutoComplete>(null)
   const { getAllUserLogCategories } = useLogCategory()
 
   const [filteredLogCategories, setFilteredLogCategories] = useState<LogCategory[]>([])
@@ -54,6 +55,7 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
         <AutoComplete
           id='category'
           name='category'
+          ref={autocompleteRef}
           value={selectedCategory}
           suggestions={filteredLogCategories}
           completeMethod={search}
@@ -71,7 +73,10 @@ const CreateLogForm = ({ onCreated = () => {} }) => {
             <PanelFooter
               items={filteredLogCategories}
               selectedItem={selectedCategory}
-              onCreated={(newValue) => handleChange({ key: 'category_id', value: newValue.id })}
+              onCreated={(newValue) => {
+                 handleChange({ key: 'category_id', value: newValue.id })
+                 autocompleteRef.current?.hide()
+              }}
             />
           }
           showEmptyMessage
