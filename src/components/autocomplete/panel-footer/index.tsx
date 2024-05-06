@@ -10,7 +10,7 @@ function PanelFooter({
   selectedItem: string
   onCreated: (item: LogCategory) => void
 }) {
-  const { handleChange, handleLogCategoryCreation, createLogCategoryMutation } = useLogCategory()
+  const { handleChange, handleLogCategoryCreation, createLogCategoryAndFetchLast } = useLogCategory()
   const isItemSelected = items.some((item) =>  item.name === selectedItem)
 
   useEffect(() => {
@@ -32,7 +32,8 @@ function PanelFooter({
         <Button
           type='button'
           label='Crear categoría'
-          loading={createLogCategoryMutation.isLoading}//Fix loader, it's not working
+          disabled={createLogCategoryAndFetchLast.isLoading}
+          loading={createLogCategoryAndFetchLast.isLoading}
           onClick={() => handleLogCategoryCreation({ onSuccess: onCreated })} />
       )}
     </div>

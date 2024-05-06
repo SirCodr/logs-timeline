@@ -56,6 +56,7 @@ const useLogCategory = () => {
 
   return {
     createLogCategoryMutation,
+    createLogCategoryAndFetchLast,
     handleLogCategoryCreation,
     getAllUserLogCategories,
     handleChange,
